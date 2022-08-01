@@ -1,0 +1,36 @@
+#!/usr/bin/python3
+
+import os
+import sys
+
+
+def clear_screen():
+        os.system('clear')
+        pass
+
+
+cmdlist = [
+        'update --list-cleanup',
+        'upgrade -fy',
+        'full-upgrade -fy',
+        'dist-upgrade',
+        'autoremove -y',
+        'clean',
+]
+
+
+cargs = (len(sys.argv) > 1)
+
+if cargs:
+        alist = sys.argv[1:]
+        alist.sort(reverse=1)
+
+        for arg in alist:
+                cmdlist.insert(1, 'satisfy {} -y'.format(arg))
+
+
+for cmd in cmdlist:
+        clear_screen()
+        print(cmd)
+        os.system('sudo apt {}'.format(cmd))
+        clear_screen()
